@@ -63,8 +63,8 @@ class Order
      */
     public function getOrderWithDrinks(): true
     {
-       //We get if any orderItem has got drinks and returns true in this cas
-       return true;
+        //We get if any orderItem has got drinks and returns true in this cas
+        return true;
     }
 
     /**
@@ -151,12 +151,34 @@ class Order
     public function printOrderWithDrinks()
     {
 
-    if ($this->getOrderWithDrinks() > 0) {
-        $drinksIncludedString = 'with drinks included ';
-    } else {
-        $drinksIncludedString = '';
+        if ($this->getOrderWithDrinks() > 0) {
+            $drinksIncludedString = 'with drinks included ';
+        } else {
+            $drinksIncludedString = '';
+        }
     }
 
-    return $drinksIncludedString;
-}
+    public function saveOrder()
+    {
+        //We should append to the last character of the file
+        //product type, money, isDelivery, drinks
+        // We should loop over all the OrderItems
+        // the resoult should be a file similar to this
+        // burger,100,0,0
+        // pizza,15,0,0
+
+        return $drinksIncludedString;
+    }
+
+    public function __toString()
+    {
+        //We should append to the last character of the file
+        //product type, money, isDelivery, drinks
+        // We should loop over all the OrderItems
+        // the resoult should be a file similar to this
+        // burger,100,0,0
+        // pizza,15,0,0
+
+        return $drinksIncludedString;
+    }
 }

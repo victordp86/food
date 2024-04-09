@@ -90,6 +90,9 @@ class OrderCommand extends Command
                 $output->writeln('Your order '.$this->myOrder->printOrderWithDrinks().'has been registered.');
                 return Command::SUCCESS;
             }
+            //Save the current order to a file
+            $this->myOrder->saveOrder();
         }
+
     }
 }

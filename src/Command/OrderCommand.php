@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+require_once 'src/Domain/Entity/Order.php';
+require_once 'src/Domain/Entity/OrderItem.php';
 #[AsCommand(
     name: 'app:order:register',
     description: 'Registers a new order.',
@@ -16,8 +18,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class OrderCommand extends Command
 {
+
+    private $myOrder;
+    private $myOrderItem1;
     protected function configure(): void
     {
+        $this->myOrder = new \App\Entity\Order();
+
+        $this->myOrderItem1 = new \App\Entity\OrderItem();
         $this->setHelp('Registers a new order in the system');
 
         $this
@@ -29,11 +37,14 @@ class OrderCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->myOrder = new \App\Entity\Order();
+        $this->myOrderItem1 = new \App\Entity\OrderItem();
         $selectedFood = $input->getArgument('selectedFood');
         $money = $input->getArgument('money');
         $drinks = $input->getArgument('drinks');
         $isDelivery = $input->getArgument('isDelivery');
 
+        $this->myOrderItem1->setOrderRef($selectedFood);
         if (!in_array($selectedFood, ['pizza', 'burger', 'sushi'])) {
             $output->writeln('Selected food must be pizza, burger or sushi.');
             return Command::FAILURE;
@@ -51,9 +62,12 @@ class OrderCommand extends Command
                     break;
             }
 
+            $this->myOrderItem1->setOrderRef($selectedFood);
+
             if (is_null($drinks)) {
                 $drinks = 0;
             }
+            $this->myOrderItem1->setDrinks($drinks);
 
             if ($drinks < 0 || $drinks > 2) {
                 $output->writeln('Number of drinks should be between 0 and 2.');
@@ -72,14 +86,8 @@ class OrderCommand extends Command
                         return Command::FAILURE;
                     }
                 }
-
-                if ($drinks > 0) {
-                    $drinksIncludedString = 'with drinks included ';
-                } else {
-                    $drinksIncludedString = '';
-                }
-
-                $output->writeln('Your order '.$drinksIncludedString.'has been registered.');
+                $this->myOrderItem1->setAmount($totalOrderAmount);
+                $output->writeln('Your order '.$this->myOrder->printOrderWithDrinks().'has been registered.');
                 return Command::SUCCESS;
             }
         }

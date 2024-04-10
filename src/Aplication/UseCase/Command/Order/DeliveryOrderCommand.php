@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Command;
+namespace App\Aplication\UseCase\Command\Order;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -16,7 +15,7 @@ require_once 'src/Domain/Entity/OrderItem.php';
     aliases: ['app:order:delivery'],
     hidden: false
 )]
-class DeliveryCommand extends Command
+class DeliveryOrderCommand extends Command
 {
 
     private $myOrder;

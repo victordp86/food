@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Aplication\UseCase\Command\Order;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +16,7 @@ require_once 'src/Domain/Entity/OrderItem.php';
     aliases: ['app:order:register'],
     hidden: false
 )]
-class OrderCommand extends Command
+class RegisterOrderCommand extends Command
 {
 
     private $myOrder;
@@ -39,12 +39,13 @@ class OrderCommand extends Command
     {
         $this->myOrder = new \App\Entity\Order();
         $this->myOrderItem1 = new \App\Entity\OrderItem();
+
         $selectedFood = $input->getArgument('selectedFood');
         $money = $input->getArgument('money');
         $drinks = $input->getArgument('drinks');
         $isDelivery = $input->getArgument('isDelivery');
-
         $this->myOrderItem1->setOrderRef($selectedFood);
+
         if (!in_array($selectedFood, ['pizza', 'burger', 'sushi'])) {
             $output->writeln('Selected food must be pizza, burger or sushi.');
             return Command::FAILURE;
@@ -63,12 +64,11 @@ class OrderCommand extends Command
             }
 
             $this->myOrderItem1->setOrderRef($selectedFood);
-
             if (is_null($drinks)) {
                 $drinks = 0;
             }
-            $this->myOrderItem1->setDrinks($drinks);
 
+            $this->myOrderItem1->setDrinks($drinks);
             if ($drinks < 0 || $drinks > 2) {
                 $output->writeln('Number of drinks should be between 0 and 2.');
                 return Command::FAILURE;

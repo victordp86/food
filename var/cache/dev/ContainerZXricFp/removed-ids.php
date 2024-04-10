@@ -52,7 +52,7 @@ return [
     '.service_locator.xUrKPVU' => true,
     '.session.deprecated' => true,
     '.session.do-not-use' => true,
-    'App\\Command\\OrderCommand' => true,
+    'App\\Aplication\\UseCase\\Command\\Order\\OrderCommand' => true,
     'Psr\\Cache\\CacheItemPoolInterface' => true,
     'Psr\\Container\\ContainerInterface' => true,
     'Psr\\Container\\ContainerInterface $parameterBag' => true,
